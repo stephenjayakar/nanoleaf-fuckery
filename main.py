@@ -12,39 +12,41 @@ panels = nl.get_ids()
 times = []
 
 
-while True:
-    event = keyboard.read_event()
-    if event.event_type == keyboard.KEY_DOWN:
-        key = event.name
-        # print(f'Pressed: {event}')
-        # print(f'Pressed: {event.scan_code}')
-        start = time.time()
-        # panel_id = random.choice(panels)
-        panel_id = panels[event.scan_code % len(panels)]
-        panel_id2 = panels[(event.scan_code + 1) % len(panels)]
-        panel_id3 = panels[(event.scan_code + 2) % len(panels)]
-        digital_twin.set_color(panel_id, (
-            random.randint(0, 255),
-            random.randint(0, 255),
-            random.randint(0, 255),
-        ))
-        digital_twin.set_color(panel_id2, (
-            random.randint(0, 255),
-            random.randint(0, 255),
-            random.randint(0, 255),
-        ))
-        digital_twin.set_color(panel_id3, (
-            random.randint(0, 255),
-            random.randint(0, 255),
-            random.randint(0, 255),
-        ))
+def main():
+    while True:
+        event = keyboard.read_event()
+        if event.event_type == keyboard.KEY_DOWN:
+            key = event.name
+            # print(f'Pressed: {event}')
+            # print(f'Pressed: {event.scan_code}')
+            start = time.time()
+            # panel_id = random.choice(panels)
+            # panel_id = panels[event.scan_code % len(panels)]
+            # panel_id2 = panels[(event.scan_code + 1) % len(panels)]
+            # panel_id3 = panels[(event.scan_code + 2) % len(panels)]
+            # digital_twin.set_color(panel_id2, (
+            #     random.randint(0, 255),
+            #     random.randint(0, 255),
+            #     random.randint(0, 255),
+            # ))
+            # digital_twin.set_color(panel_id3, (
+            #     random.randint(0, 255),
+            #     random.randint(0, 255),
+            #     random.randint(0, 255),
+            # ))
 
-        digital_twin.sync()
-        elapsed_time = time.time() - start
-        print(f'elapsed time: {elapsed_time}')
-        times.append(elapsed_time)
-        if key == 'q':
-            break
+            # digital_twin.sync()
+            colors = []
+            for _ in range(2):
+                colors.append((random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255)))
+            nl.pulsate(colors[0], 0.5)
+            elapsed_time = time.time() - start
+            print(f'elapsed time: {elapsed_time}')
+            times.append(elapsed_time)
+            if key == 'q':
+                break
 
 # while True:
 #     start = time.time()
@@ -60,3 +62,7 @@ while True:
 #     elapsed_time = time.time() - start
 #     print(f'elapsed time: {elapsed_time}')
 #     times.append(elapsed_time)
+
+if __name__ == '__main__':
+    main()
+
